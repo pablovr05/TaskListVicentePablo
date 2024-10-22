@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Document</title>
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    
+    <!-- jQuery UI JS -->
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+</head>
+<body>
+    <div id="div_title">
+        <button id="opener">+</button>
+        <h2 id="title">Tasques</h2>
+    </div>
+    <div id="div_tasks">
+    </div>
+
+    <div id="dialog" title="Task append">
+        <p>Introdueix el nom de la tasca que vols afegir a la teva task list</p>
+        <input id="task_name" type="text">
+        <button id="accept_button">acceptar</button>
+        <button id="cancel_button">cancelar</button>
+    </div>
+
+    <script>
+        $(function() {
+            $("#dialog").dialog({
+                autoOpen: false,  
+            });
+
+            $("#opener").on("click", function() {
+                $("#dialog").dialog("open");
+            });
+
+            $("#accept_button").on("click", function() {
+                const taskName = $("#task_name").val();
+
+                if (taskName.trim() !== "") {
+                    $("#div_tasks").append("<h3>" + taskName + "</h3>");
+                    $("#task_name").val("");
+                }
+
+                $("#dialog").dialog("close");
+            });
+
+            $("#cancel_button").on("click", function() {
+                $("#dialog").dialog("close");
+            });
+        });
+    </script>
+</body>
+</html>

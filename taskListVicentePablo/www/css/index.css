@@ -1,0 +1,44 @@
+#title {
+    color: black;
+    text-align: center;
+    font-weight: 20px;
+    margin: 0 auto;
+}
+
+#div_tasks {
+    font-size: 15px;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif ;
+    text-align: center;
+    align-items: center;
+    width: 50%;
+    margin: 20px auto; 
+}
+
+#div_title {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    border-radius: 15px;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    text-align: center;
+    width: 35%; 
+    margin: 20px auto; 
+    background-color: rgb(228, 228, 228);
+}
+
+button {
+    margin: 10px;
+}
+
+h3 {
+    border-top: 2px;
+    border: solid;
+    border-width: 1px;
+    border-color: rgba(0, 0, 0, 0.300);
+    border-radius: 5px;
+    align-self: center;
+    text-align: center;
+    align-items: center;
+}
