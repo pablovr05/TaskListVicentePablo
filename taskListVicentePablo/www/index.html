@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/index.css">
-    <title>Document</title>
+    <title>Tasklist Project</title>
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -31,7 +31,32 @@
     </div>
 
     <script>
+        // Save tasks to localStorage
+        function saveTasks() {
+            const tasks = [];
+            $(".task").each(function () {
+                tasks.push($(this).find(".task_text").text());
+            });
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+        }
+
+        // Load tasks from localStorage
+        function loadTasks() {
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            tasks.forEach(taskName => {
+                $("#div_tasks").append(`
+                    <div class="task">
+                        <span class="task_text">${taskName}</span>
+                        <button class="edit_button">Edita</button>
+                        <button class="delete_button">Esborra</button>
+                    </div>
+                `);
+            });
+        }
+
         $(function() {
+            loadTasks();
+
             $("#dialog").dialog({
                 autoOpen: false,  
             });
@@ -44,7 +69,14 @@
                 const taskName = $("#task_name").val();
 
                 if (taskName.trim() !== "") {
-                    $("#div_tasks").append("<h3>" + taskName + "</h3>");
+                    $("#div_tasks").append(`
+                        <div class="task">
+                            <span class="task_text">${taskName}</span>
+                            <button class="edit_button">Edita</button>
+                            <button class="delete_button">Esborra</button>
+                        </div>
+                    `);
+                    saveTasks();
                     $("#task_name").val("");
                 }
 
@@ -54,7 +86,79 @@
             $("#cancel_button").on("click", function() {
                 $("#dialog").dialog("close");
             });
+
+            $("#div_tasks").on("click", ".edit_button", function () {
+                const taskElement = $(this).siblings(".task_text");
+                const newText = prompt("Edita la tasca:", taskElement.text());
+                if (newText !== null) {
+                    taskElement.text(newText);
+                    saveTasks();
+                }
+            });
+
+            $("#div_tasks").on("click", ".delete_button", function () {
+                $(this).parent().remove();
+                saveTasks();
+            });
         });
     </script>
+
+    <style>
+        #title {
+            color: black;
+            text-align: center;
+            font-weight: 20px;
+            margin: 0 auto;
+        }
+
+        #div_tasks {
+            font-size: 15px;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            text-align: center;
+            align-items: center;
+            width: 50%;
+            margin: 20px auto; 
+        }
+
+        #div_title {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            border-radius: 15px;
+            border-color: black;
+            border-width: 2px;
+            border-style: solid;
+            text-align: center;
+            width: 35%; 
+            margin: 20px auto; 
+            background-color: rgb(228, 228, 228);
+        }
+
+        button {
+            margin: 10px;
+        }
+
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px auto;
+            padding: 10px;
+            width: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+
+        .task_text {
+            flex-grow: 1;
+            text-align: left;
+            margin-right: 10px;
+        }
+
+        .edit_button, .delete_button {
+            margin-left: 5px;
+        }
+    </style>
 </body>
 </html>
